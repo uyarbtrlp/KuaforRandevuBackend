@@ -5,6 +5,21 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20200919080036_approvedUsers.cs" />
+    <Compile Remove="Migrations\20200919080036_approvedUsers.Designer.cs" />
+    <Compile Remove="Migrations\20200919080402_approvedCustomers.cs" />
+    <Compile Remove="Migrations\20200919080402_approvedCustomers.Designer.cs" />
+    <Compile Remove="Migrations\20200919080527_approvedCustomers.cs" />
+    <Compile Remove="Migrations\20200919080527_approvedCustomers.Designer.cs" />
+    <Compile Remove="Migrations\20200919080911_approvedCustomers2.cs" />
+    <Compile Remove="Migrations\20200919080911_approvedCustomers2.Designer.cs" />
+    <Compile Remove="Migrations\20200919081041_approvedCustomers3.cs" />
+    <Compile Remove="Migrations\20200919081041_approvedCustomers3.Designer.cs" />
+    <Compile Remove="Migrations\20200919081231_approvedCustomers4.cs" />
+    <Compile Remove="Migrations\20200919081231_approvedCustomers4.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.7" />
     <PackageReference Include="Microsoft.AspNetCore.Cors" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.7" />
@@ -13,15 +28,16 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.1.7" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.7" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.7">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.4" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Migrations\" />
     <Folder Include="Resources\" />
   </ItemGroup>
 

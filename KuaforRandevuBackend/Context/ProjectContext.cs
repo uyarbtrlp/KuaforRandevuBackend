@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -15,5 +16,8 @@ namespace KuaforRandevuBackend.Context
 
         }
         public DbSet<AppUser> AppUsers { get; set; }
+        public DbSet<ApprovedCustomer> ApprovedCustomers { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public DbSet<Customer> Customers{ get; set; }
     }
 }
