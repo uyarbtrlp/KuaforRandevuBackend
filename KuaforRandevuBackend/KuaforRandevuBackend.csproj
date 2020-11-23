@@ -5,6 +5,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20200830130317_users.cs" />
+    <Compile Remove="Migrations\20200830130317_users.Designer.cs" />
+    <Compile Remove="Migrations\20200908115254_customer.cs" />
+    <Compile Remove="Migrations\20200908115254_customer.Designer.cs" />
+    <Compile Remove="Migrations\20200908120131_customer2.cs" />
+    <Compile Remove="Migrations\20200908120131_customer2.Designer.cs" />
+    <Compile Remove="Migrations\20200908122314_customer3.cs" />
+    <Compile Remove="Migrations\20200908122314_customer3.Designer.cs" />
+    <Compile Remove="Migrations\20200908122503_customer4.cs" />
+    <Compile Remove="Migrations\20200908122503_customer4.Designer.cs" />
     <Compile Remove="Migrations\20200919080036_approvedUsers.cs" />
     <Compile Remove="Migrations\20200919080036_approvedUsers.Designer.cs" />
     <Compile Remove="Migrations\20200919080402_approvedCustomers.cs" />
@@ -17,6 +27,12 @@
     <Compile Remove="Migrations\20200919081041_approvedCustomers3.Designer.cs" />
     <Compile Remove="Migrations\20200919081231_approvedCustomers4.cs" />
     <Compile Remove="Migrations\20200919081231_approvedCustomers4.Designer.cs" />
+    <Compile Remove="Migrations\20200919081625_approvedCustomers.cs" />
+    <Compile Remove="Migrations\20200919081625_approvedCustomers.Designer.cs" />
+    <Compile Remove="Migrations\20200920095540_loggedusers.cs" />
+    <Compile Remove="Migrations\20200920095540_loggedusers.Designer.cs" />
+    <Compile Remove="Migrations\20200924094001_dateTime.cs" />
+    <Compile Remove="Migrations\20200924094001_dateTime.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -38,6 +54,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Migrations\" />
     <Folder Include="Resources\" />
   </ItemGroup>
 

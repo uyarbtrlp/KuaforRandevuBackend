@@ -138,8 +138,8 @@ namespace KuaforRandevuBackend.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("Date")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Hour")
                         .HasColumnType("nvarchar(max)");
@@ -198,6 +198,33 @@ namespace KuaforRandevuBackend.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Customers");
+                });
+
+            modelBuilder.Entity("KuaforRandevuBackend.Models.LoggedUsers", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Surname")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Username")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("LoggedUsers");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -312,6 +339,13 @@ namespace KuaforRandevuBackend.Migrations
                 });
 
             modelBuilder.Entity("KuaforRandevuBackend.Models.Customer", b =>
+                {
+                    b.HasOne("KuaforRandevuBackend.Models.AppUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+                });
+
+            modelBuilder.Entity("KuaforRandevuBackend.Models.LoggedUsers", b =>
                 {
                     b.HasOne("KuaforRandevuBackend.Models.AppUser", "User")
                         .WithMany()

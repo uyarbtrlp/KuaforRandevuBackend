@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
@@ -106,6 +107,128 @@ namespace KuaforRandevuBackend.Controllers
 
             }
         }
+        [HttpPost]
+        [Authorize]
+        [Route("LoginMore")]
+        public async Task<IActionResult> LoginMore(LoginModel model)
+        {
+            string userId = User.Claims.First(c => c.Type == "UserID").Value;
+            var userLogged = await _userManager.FindByIdAsync(userId);
+            try
+            {
+                
+                var user = await _userManager.FindByNameAsync(model.UserName);
+                if (user != null)
+                {
+                    if (await _userManager.CheckPasswordAsync(user, model.Password))
+                    {
+                        
+                        var tokenDescriptor = new SecurityTokenDescriptor
+                        {
+                            Subject = new ClaimsIdentity(new Claim[]
+                        {
+                        new Claim("UserID",user.Id.ToString())
+                        }),
+                            Expires = DateTime.UtcNow.AddDays(365),
+                            SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_appSettings.JWT_Secret)), SecurityAlgorithms.HmacSha256Signature)
+                        };
+                        var tokenHandler = new JwtSecurityTokenHandler();
+                        var securityToken = tokenHandler.CreateToken(tokenDescriptor);
+                        var token = tokenHandler.WriteToken(securityToken);
+                        var loggedUser = new LoggedUsers
+                        {
+                            Id = user.Id,
+                            Email = user.Email,
+                            Name = user.Name,
+                            Surname = user.Surname,
+                            Username = user.UserName,
+                            User = userLogged,
+                            UserId = userLogged.Id
+                        };
+                        if (userLogged.Id != user.Id)
+                        {
+                            var isUserLogged = _context.LoggedUsers.Where(x => x.Id == user.Id).FirstOrDefault();
+                            if (isUserLogged != null)
+                            {
+                                return BadRequest(new { message = "Bu hesapla zaten giriş yapmışsınız." });
+                            }
+                            else
+                            {
+                                
+                                    await _context.LoggedUsers.AddAsync(loggedUser);
+                                    await _context.SaveChangesAsync();
+                                    return Ok(new { token });
+                                
+                               
+                                
+
+                            }
+                            
+                        }
+                        else
+                        {
+                            return  BadRequest(new { message = "Bu hesapla zaten giriş yapmışsınız." });
+                        }
+
+                        
+
+                    }
+                    else
+                    {
+                        return BadRequest(new { message = "Kullanıcı adı veya şifre yanlış. Lütfen kontrol ediniz" });
+                    }
+
+
+                }
+                else
+                {
+
+                    return BadRequest(new { message = "Böyle bir kullanıcı bulunmamaktadır. Lütfen üye olunuz." });
+
+                }
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+           
+        }
+        [HttpPost]
+        [Route("LoginSelect")]
+        //POST /api/User/Login
+        public async Task<IActionResult> LoginSelect(LoginModel model)
+        {
+
+            var user = await _userManager.FindByNameAsync(model.UserName);
+            if (user != null)
+            {
+                
+                    var tokenDescriptor = new SecurityTokenDescriptor
+                    {
+                        Subject = new ClaimsIdentity(new Claim[]
+                    {
+                        new Claim("UserID",user.Id.ToString())
+                    }),
+                        Expires = DateTime.UtcNow.AddDays(365),
+                        SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_appSettings.JWT_Secret)), SecurityAlgorithms.HmacSha256Signature)
+                    };
+                    var tokenHandler = new JwtSecurityTokenHandler();
+                    var securityToken = tokenHandler.CreateToken(tokenDescriptor);
+                    var token = tokenHandler.WriteToken(securityToken);
+                    return Ok(new { token });
+
+                
+               
+
+
+            }
+            else
+            {
+
+                return BadRequest(new { message = "Böyle bir kullanıcı bulunmamaktadır. Lütfen üye olunuz." });
+
+            }
+        }
         [HttpGet]
         [Authorize]
         [Route("GetUserProfile")]
@@ -123,6 +246,18 @@ namespace KuaforRandevuBackend.Controllers
                 user.UserName,
                 
             };
+        }
+
+        [HttpGet]
+        [Authorize]
+        [Route("GetLoggedUsers")]
+
+        public async Task<Object> GetLoggedUsers()
+        {
+
+            string userId = User.Claims.First(c => c.Type == "UserID").Value;
+            var loggedUsers = _context.LoggedUsers.Where(x => x.UserId == userId).ToList();
+            return loggedUsers;
         }
 
     }

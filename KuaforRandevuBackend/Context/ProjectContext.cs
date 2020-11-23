@@ -17,6 +17,7 @@ namespace KuaforRandevuBackend.Context
         }
         public DbSet<AppUser> AppUsers { get; set; }
         public DbSet<ApprovedCustomer> ApprovedCustomers { get; set; }
+        public DbSet<LoggedUsers> LoggedUsers { get; set; }
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public DbSet<Customer> Customers{ get; set; }
     }

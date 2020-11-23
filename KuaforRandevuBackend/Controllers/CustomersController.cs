@@ -28,12 +28,25 @@ namespace KuaforRandevuBackend.Controllers
         // GET: api/Customers
         [HttpGet]
         [Route("getCustomers")]
-        public async Task<ActionResult<IEnumerable<Customer>>> GetCustomers()
+        public async Task<ActionResult<IEnumerable<Customer>>> GetCustomers(string date)
         {
             string userId = User.Claims.First(c => c.Type == "UserID").Value;
-            return await _context.Customers.Where(x => x.UserId == userId).OrderBy(x=>x.Hour).ToListAsync();
+
+            return await _context.Customers.Where(x => x.UserId == userId && x.Date==date).OrderBy(x=>x.Hour).ToListAsync();
         }
-       
+        // GET: api/Customers
+        [HttpGet]
+        [Route("getApprovedCustomers")]
+        public async Task<ActionResult<IEnumerable<ApprovedCustomer>>> GetApprovedCustomers(string date)
+        {
+            string userId = User.Claims.First(c => c.Type == "UserID").Value;
+            var date1 = Convert.ToDateTime(date);
+            var s = Convert.ToDateTime(DateTime.Now.ToString("dd.MM.yyyy"));
+            var customers=await _context.ApprovedCustomers.Where(x => x.UserId == userId && x.Date >= date1 && x.Date<=s).OrderByDescending(x => x.Date).ToListAsync();
+            return customers;
+        }
+        
+
 
         // GET: api/Customers/5
         [HttpGet("{id}")]
@@ -119,7 +132,7 @@ namespace KuaforRandevuBackend.Controllers
             var approvedUser = new ApprovedCustomer { 
                 Name=customer.Name,
                Surname=customer.Surname,
-               Date=customer.Date,
+               Date=Convert.ToDateTime(customer.Date),
                Hour=customer.Hour,
                Id=customer.Id,
                Price=customer.Price,

@@ -13,7 +13,7 @@ namespace KuaforRandevuBackend.Models
         public String Id { get; set; }
         public String Name { get; set; }
         public String Surname { get; set; }
-        public String Date { get; set; }
+        public DateTime Date { get; set; }
         public String Hour { get; set; }
         public String Transactions { get; set; }
         public String Price { get; set; }
