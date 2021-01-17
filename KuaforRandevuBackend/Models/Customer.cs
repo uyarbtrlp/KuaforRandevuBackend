@@ -15,6 +15,7 @@ namespace KuaforRandevuBackend.Models
         public String Hour { get; set; }
         public String Transactions { get; set; }
         public String Price { get; set; }
+        public String PaymentChoice { get; set; }
         public String UserId { get; set; }
         public AppUser User { get; set; }
     }

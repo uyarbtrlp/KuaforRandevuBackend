@@ -76,6 +76,7 @@ namespace KuaforRandevuBackend.Controllers
             _customer.Hour = customer.Hour;
             _customer.Transactions = customer.Transactions;
             _customer.Price = customer.Price;
+            _customer.PaymentChoice = customer.PaymentChoice;
             _context.Entry(_customer).State = EntityState.Modified;
             _context.Customers.Update(_customer);
             _context.SaveChanges();
@@ -138,7 +139,8 @@ namespace KuaforRandevuBackend.Controllers
                Price=customer.Price,
                Transactions=customer.Transactions,
                User=customer.User,
-               UserId=customer.UserId
+               UserId=customer.UserId,
+               PaymentChoice = customer.PaymentChoice
             
             
             };
